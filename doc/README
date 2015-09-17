@@ -1,0 +1,18 @@
+#--------------------------------------------------------------------------
+# File and Version Information:
+#  $Id$
+#
+# Description:
+#  README file for package XtcFileIO
+#------------------------------------------------------------------------
+
+Package author: David A. Schneider
+
+Brief description:
+==================
+
+Wrap interface to File IO in order to do mock testing.
+
+Detailed description:
+=====================
+
