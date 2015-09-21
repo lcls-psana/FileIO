@@ -71,8 +71,14 @@ public:
   virtual off_t lseek(int fileds, off_t offset, int whence);
   virtual ssize_t read(int filedes, void *buffer, size_t size);
   virtual off_t filesize(int fileds);
-  
+
+  // new function to MockFileIO - dump map contents to stream
+  std::ostream & dump(std::ostream &) const;
+
  private:
+
+  void updateFileInfo();
+
   const MapFname2Off2Buffer &m_fname2off2buffer;
   struct FileInfo {
     int fd; off_t pos; bool open;

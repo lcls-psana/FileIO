@@ -43,16 +43,28 @@ namespace FileIO {
 MockFileIO::MockFileIO(const MapFname2Off2Buffer & mapFname2Off2Buffer) :
   m_fname2off2buffer(mapFname2Off2Buffer)
 {
-  int fd = 1;
+  updateFileInfo();
+}
+
+void MockFileIO::updateFileInfo() {
+  int nextFd = 0;
+  for (MapFiles::iterator it = m_fileInfo.begin();
+       it != m_fileInfo.end(); ++it) {
+    nextFd = std::max(nextFd, it->second.fd);
+  }
+  ++nextFd;
   for (MapFname2Off2Buffer::const_iterator it = m_fname2off2buffer.begin();
        it != m_fname2off2buffer.end(); ++it) {
-    m_fileInfo[it->first]=FileInfo(fd, 0, false);
-    ++fd;
+    if (m_fileInfo.find(it->first) == m_fileInfo.end()) {
+      m_fileInfo[it->first]=FileInfo(nextFd, 0, false);
+      ++nextFd;
+    }
   }
 }
 
 // opening/closing
 int MockFileIO::open(const char *fname, int flags, mode_t mode) {
+  updateFileInfo();
   MapFiles::iterator pos = m_fileInfo.find(std::string(fname));
   if (pos == m_fileInfo.end()) return -1;
   FileInfo &fi = pos->second;
@@ -149,6 +161,18 @@ MockFileIO::FileInfo * MockFileIO::getFileInfo(int fd, std::string &fname) {
     }
   }
   return NULL;
+}
+
+std::ostream & MockFileIO::dump(std::ostream &o) const {
+  for (MapFname2Off2Buffer::const_iterator it = m_fname2off2buffer.begin();
+       it != m_fname2off2buffer.end(); ++it) {
+    o << it->first << std::endl;
+    for (MapOff2Buffer::const_iterator jt = it->second.begin();
+         jt != it->second.end(); ++jt) {
+      o << "   offset=" << jt->first << "  buflen=" << jt->second.size() << std::endl;
+    }
+  }
+  return o;
 }
 
 }; // namespace FileIO

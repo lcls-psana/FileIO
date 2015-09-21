@@ -11,6 +11,11 @@ Package author: David A. Schneider
 Please describe any modifications that you made to the package in the
 reverse time order.
 
+Tag: V00-00-02
+2015-09-21 David A. Schneider
+- Update MockFileIO so that you can change test files avail mid test and
+  add dump function.
+
 Tag: V00-00-01
 2015-09-16 David A. Schneider
 - Initial checkin. Interface to File I/O in order to make Mock
