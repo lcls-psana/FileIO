@@ -85,7 +85,7 @@ namespace FileIO {
 
   // filesize
   off_t FileIO_I::filesize(int filedes) {
-    throw NotImplementedException(ERR_LOC,"lseek64" );
+    throw NotImplementedException(ERR_LOC,"filesize" );
   }
 }; // namespace FileIO
 

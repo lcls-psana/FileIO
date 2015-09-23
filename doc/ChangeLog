@@ -11,6 +11,10 @@ Package author: David A. Schneider
 Please describe any modifications that you made to the package in the
 reverse time order.
 
+Tag: V00-00-03
+2015-09-23 David A. Schneider
+- minor fix to thrown exception.
+
 Tag: V00-00-02
 2015-09-21 David A. Schneider
 - Update MockFileIO so that you can change test files avail mid test and
